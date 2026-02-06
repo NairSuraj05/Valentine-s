@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Rose for You 🌹</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #2c0000 0%, #000000 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .rose-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .rose-container:active {
+            transform: scale(1.2);
+        }
+
+        #rose-emoji {
+            font-size: 100px;
+            filter: drop-shadow(0 0 10px #ff4d4d);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            letter-spacing: 2px;
+            padding: 0 20px;
+        }
+
+        p {
+            font-style: italic;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* Falling Petals */
+        .petal {
+            position: fixed;
+            top: -10%;
+            user-select: none;
+            pointer-events: none;
+            z-index: 10;
+            color: #ff4d4d;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="rose-container" onclick="createBurst()">
+        <div id="rose-emoji">🌹</div>
+    </div>
+
+    <h1>Happy Rose Day Baby ❤️</h1>
+    <p>A Rose for my lil girl 🐥 <br> Kisses. </p>
+
+    <script>
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.innerHTML = '🐥🌹';
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = Math.random() * 20 + 10 + 'px';
+            petal.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+            
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 5000);
+        }
+
+        // Create petals continuously
+        setInterval(createPetal, 300);
+
+        // Extra burst of petals when tapping the rose
+        function createBurst() {
+            for(let i=0; i<15; i++) {
+                setTimeout(createPetal, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
