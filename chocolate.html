@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Chocolate Day 🍫</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #3e2723; /* Dark Chocolate Brown */
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Chocolate Rain Effect */
+        .choco-fall {
+            position: fixed;
+            top: -10%;
+            font-size: 24px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        #container {
+            width: 90%;
+            max-width: 400px;
+            background: #fff3e0; /* Creamy color */
+            padding: 30px 20px;
+            border-radius: 15px;
+            border: 8px solid #5d4037;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 { color: #3e2723; margin-bottom: 10px; font-size: 24px; }
+        p { color: #5d4037; margin-bottom: 20px; font-style: italic; }
+
+        .choco-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .choco-item {
+            font-size: 40px;
+            background: #efebe9;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 0 #bcaaa4;
+        }
+
+        .choco-item:active { transform: scale(0.9); }
+
+        #final-msg {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .yes-btn {
+            background-color: #3e2723;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>For My Sweetest... 🍫</h1>
+        <p>Pick a chocolate from the box 🐥</p>
+        
+        <div class="choco-grid" id="grid">
+            <div class="choco-item" onclick="reveal(this, 'You are the sweetest')">🍫</div>
+            <div class="choco-item" onclick="reveal(this, 'You are cute')">🍩</div>
+            <div class="choco-item" onclick="reveal(this, 'You are soft')">🍪</div>
+            <div class="choco-item" onclick="reveal(this, 'Just stay mine')">🧁</div>
+            <div class="choco-item" onclick="reveal(this, 'You are my fav chocolate')">🍨</div>
+            <div class="choco-item" onclick="reveal(this, 'You taste sweet too 🫣')">🍬</div>
+        </div>
+
+        <div id="final-msg">
+            <h2 id="display-text" style="color: #3e2723;"></h2>
+            <button class="yes-btn" onclick="celebrate()">Love You!</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Falling Chocolates
+        function createChoco() {
+            const choco = document.createElement('div');
+            choco.classList.add('choco-fall');
+            const icons = ['🍫', '🍩', '🍪', '🍬'];
+            choco.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            choco.style.left = Math.random() * 100 + "vw";
+            choco.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(choco);
+            setTimeout(() => choco.remove(), 5000);
+        }
+        setInterval(createChoco, 400);
+
+        // 2. Reveal Logic
+        let count = 0;
+        function reveal(el, msg) {
+            el.style.visibility = 'hidden';
+            document.getElementById('final-msg').style.display = 'block';
+            document.getElementById('display-text').innerText = msg;
+            count++;
+            
+            if(count === 6) {
+                document.querySelector('p').innerText = "The box is empty, but my heart is full of love for you";
+                document.getElementById('display-text').innerText = "saara kuch le liya moti ladki ne😔😭";
+            }
+        }
+
+        function celebrate() {
+            document.body.style.backgroundColor = '#ff4081';
+            document.getElementById('container').innerHTML = "<h1> I love you baby ❤️</h1><p>Thank you for making my life sweeter</p><div style='font-size:60px;'>🍫✨</div>";
+        }
+    </script>
+</body>
+</html>
