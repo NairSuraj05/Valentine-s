@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Teddy Day🧸</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #fdf0d5; /* Soft Cream */
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Floating Teddies Background */
+        .teddy-float {
+            position: fixed;
+            bottom: -10%;
+            font-size: 30px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 6s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        #container {
+            width: 85%;
+            max-width: 380px;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.15);
+            position: relative;
+            z-index: 10;
+            border: 4px dashed #d4a373;
+        }
+
+        .teddy-main {
+            font-size: 100px;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .teddy-main:active { transform: scale(1.3) rotate(10deg); }
+
+        h1 { color: #8b4513; font-size: 24px; margin-bottom: 10px; }
+        p { color: #a68a64; font-size: 16px; margin-bottom: 30px; }
+
+        #hugBtn {
+            background-color: #bc6c25;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(188, 108, 37, 0.4);
+            transition: 0.2s;
+        }
+
+        #hugBtn:active { transform: scale(0.95); }
+
+        .message {
+            margin-top: 20px;
+            color: #8b4513;
+            font-weight: bold;
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div class="teddy-main" id="bigTeddy" onclick="wiggle()">🧸</div>
+        <h1>Happy Teddy Day </h1>
+        <p>Actually tum ho meri teddy bear ... itni soft jo ho 😭</p>
+        
+        <button id="hugBtn" onclick="sendHug()">Send a Hug</button>
+        <div class="message" id="msg">Teddy ko pyaar se touch karo🐥</div>
+    </div>
+
+    <script>
+        // 1. Floating Teddy Logic
+        function createFloatingTeddy() {
+            const teddy = document.createElement('div');
+            teddy.classList.add('teddy-float');
+            const types = ['🧸', '🤎', '🐥', '☁️'];
+            teddy.innerHTML = types[Math.floor(Math.random() * types.length)];
+            teddy.style.left = Math.random() * 100 + "vw";
+            teddy.style.animationDuration = Math.random() * 3 + 4 + "s";
+            document.body.appendChild(teddy);
+            setTimeout(() => teddy.remove(), 7000);
+        }
+
+        // 2. Interaction Logic
+        function wiggle() {
+            const msgs = [
+                "I love you",
+                "You're so huggable",
+                "Hugs you tightly",
+                "You're my favorite person"
+            ];
+            document.getElementById('msg').innerText = msgs[Math.floor(Math.random() * msgs.length)];
+            
+            // Randomly scale and rotate on click
+            const teddy = document.getElementById('bigTeddy');
+            teddy.style.transform = `scale(1.2) rotate(${Math.random() * 20 - 10}deg)`;
+            setTimeout(() => {
+                teddy.style.transform = "scale(1) rotate(0deg)";
+            }, 200);
+        }
+
+        function sendHug() {
+            // Fill the screen with teddies
+            for(let i = 0; i < 15; i++) {
+                setTimeout(createFloatingTeddy, i * 100);
+            }
+            document.getElementById('msg').innerText = "Hugs tightly 🐥";
+            document.getElementById('hugBtn').innerText = "Hug Sent!";
+            document.getElementById('hugBtn').style.backgroundColor = "#dda15e";
+        }
+
+        // Slow background float
+        setInterval(createFloatingTeddy, 800);
+    </script>
+</body>
+</html>
