@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For You ❤️</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background-color: #0a0a0a;
+            color: white;
+            font-family: -apple-system, system-ui, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 90%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Stage 1: The Envelope */
+        .big-icon { font-size: 100px; cursor: pointer; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* Stage 2: The Timeline */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Common Button */
+        .btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        /* Success Rain */
+        #rain-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .heart-particle {
+            position: absolute;
+            top: -50px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="rain-container"></div>
+
+    <div id="stage1" class="stage active">
+        <div class="big-icon" onclick="toStage(2)">✉️</div>
+        <p style="margin-top: 20px; letter-spacing: 2px;">SURPRISE INSIDE</p>
+    </div>
+
+    <div id="stage2" class="stage">
+        <div class="card">
+            <h2 style="margin-bottom: 15px; color: #ff758f;">Our Week...</h2>
+            <p>🌹 7th: Rose Day</p>
+            <p>💍 8th: Propose Day</p>
+            <p>🍫 9th: Chocolate Day</p>
+            <p>🧸 10th: Teddy Day</p>
+            <p>🤙 11th: Promise Day</p>
+            <p>🤗 12th: Hug Day</p>
+            <p>💋 13th: Kiss Day</p>
+        </div>
+        <button class="btn" onclick="toStage(3)">Continue →</button>
+    </div>
+
+    <div id="stage3" class="stage">
+        <div class="big-icon" id="heart-lock" onclick="revealValentine()">❤️</div>
+        <h1 id="title">Is it a Yes?</h1>
+        <p id="sub" style="margin-bottom: 25px; opacity: 0.7;">Tap the heart to unlock my question...</p>
+        <button id="finalBtn" class="btn" style="display: none;" onclick="celebrate()">YES! ❤️</button>
+    </div>
+
+    <div id="stage4" class="stage">
+        <h1 style="font-size: 40px;">YAY! 🥰</h1>
+        <p style="margin-top: 20px; font-size: 20px;">Happy Valentine's Day!</p>
+        <p style="margin-top: 10px; opacity: 0.8;">You've made me the happiest person.</p>
+    </div>
+
+    <script>
+        // Use a standard navigation function - Works on all browsers
+        function toStage(num) {
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            document.getElementById('stage' + num).classList.add('active');
+        }
+
+        // Simplest "Reveal" logic - avoids double-tap errors
+        function revealValentine() {
+            document.getElementById('heart-lock').innerHTML = '💖';
+            document.getElementById('title').innerText = "Be My Valentine?";
+            document.getElementById('sub').innerText = "I've been waiting to ask you...";
+            document.getElementById('finalBtn').style.display = 'block';
+            if (navigator.vibrate) navigator.vibrate(100);
+        }
