@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Quiet Moment ❤️</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background: #000;
+            color: #f8edeb;
+            font-family: 'Garamond', 'Georgia', serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 2s ease;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 107, 107, 0.1) 0%, rgba(0,0,0,1) 70%);
+            z-index: -1;
+            animation: flicker 4s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+        }
+
+        .stage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            max-width: 400px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .candle {
+            font-size: 60px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 10px #ff9f1c);
+            margin-bottom: 20px;
+        }
+
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 2px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-weight: 300; letter-spacing: 4px; color: #e63946; margin-bottom: 20px; font-size: 1.5rem; }
+        
+        p { font-size: 1.1rem; line-height: 1.8; font-style: italic; opacity: 0.8; }
+
+        .btn-soft {
+            background: transparent;
+            color: #f8edeb;
+            border: 1px solid rgba(248, 237, 235, 0.3);
+            padding: 12px 30px;
+            margin-top: 30px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: 0.5s;
+        }
+
+        .btn-soft:hover { background: rgba(230, 57, 70, 0.2); border-color: #e63946; }
+
+        .rose-petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            top: -10vh;
+            animation: drift linear forwards;
+            opacity: 0.6;
+        }
+
+        @keyframes drift {
+            to { transform: translateY(110vh) translateX(50px) rotate(360deg); }
+        }
+
+        #final-heart {
+            font-size: 80px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 15px #e63946);
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow"></div>
+
+    <div id="stage1" class="stage active">
+        <div class="candle" onclick="toStage(2)">🕯️</div>
+        <p>Light the candle to begin...</p>
+    </div>
+
+    <div id="stage2" class="stage">
+        <div class="glass-card">
+            <h1>VALENTINE'S EVE</h1>
+            <p>
+                In the stillness of the night, away from the world's noise, my thoughts always drift back to you. This moment and my heart... they all belong to you.
+            </p>
+            <button class="btn-soft" onclick="toStage(3)">COME CLOSER</button>
+        </div>
+    </div>
+
+    <div id="stage3" class="stage">
+        <div id="final-heart" onclick="celebrate()">❤️</div>
+        <h1>BE MINE?</h1>
+        <p>Beyond the flowers and the chocolate, it's just you and me. Always.</p>
+    </div>
+
+    <div id="stage4" class="stage">
+        <h1 style="color: #fff;">OURS. ❤️</h1>
+        <p>Happy Valentine's Day, Beautiful.</p>
+    </div>
+
+    <script>
+        function toStage(num) {
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            document.getElementById('stage' + num).classList.add('active');
+            if(num === 2) document.body.style.background = "#1a0505";
+            if(num === 4) startPetals();
+        }
+
+        function celebrate() {
+            toStage(4);
+            document.body.style.background = "#2b0d0d";
+        }
+
+        function startPetals() {
+            setInterval(() => {
+                const p = document.createElement('div');
+                p.className = 'rose-petal';
+                p.innerHTML = '🌹';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.fontSize = Math.random() * 10 + 15 + 'px';
+                const dur = Math.random() * 3 + 4;
+                p.style.animationDuration = dur + 's';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), dur * 1000);
+            }, 400);
+        }
+    </script>
+</body>
+</html>
